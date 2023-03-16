@@ -35,3 +35,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 scripts/digital_agriculture_projects.json
+scripts/projects_metadata.json
