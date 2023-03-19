@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+scripts/digital_agriculture_projects.json
+scripts/projects_metadata.json
+scripts/search.py
+scripts/__pycache__/search.cpython-39.pyc
+scripts/documents_with_embeddings.npy
