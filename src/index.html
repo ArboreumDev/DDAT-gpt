@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Search</title>
+</head>
+<body>
+    <h1>Semantic Search</h1>
+    <form action="/add_document" method="post">
+        <label for="p_number">Enter Worldbank P Number:</label>
+        <input type="text" name="p_number" required>
+        <button type="submit">Add Document</button>
+    </form>
+    <br>
+    <form action="/search" method="get">
+        <label for="query">Enter Search Query:</label>
+        <input type="text" name="query" required>
+        <button type="submit">Search</button>
+    </form>
+    <br>
+    {% if results %}
+        <h2>Search Results:</h2>
+        <ol>
+        {% for result in results %}
+            <li>
+                <strong>P Number:</strong> {{ result.p_number }} <br>
+                <strong>Score:</strong> {{ result.score }} <br>
+                <strong>Text:</strong> {{ result.text }} <br>
+            </li>
+        {% endfor %}
+        </ol>
+    {% endif %}
+</body>
+</html>
