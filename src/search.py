@@ -74,6 +74,9 @@ app = Flask(__name__)
 search_pipeline, document_store = init_search_pipeline()
 
 
+from flask import Flask, request, jsonify, render_template
+
+
 @app.route("/add_document", methods=["POST"])
 def add_document():
     p_number = request.form["p_number"]
@@ -84,9 +87,9 @@ def add_document():
         document["embedding"] = embeddings
         document_store.write_documents([document])
 
-        return jsonify({"status": "success", "p_number": p_number}), 200
+        return render_template("index.html", message=f"Document with P Number {p_number} added successfully.")
     else:
-        return jsonify({"status": "failure", "message": "Failed to fetch document."}), 400
+        return render_template("index.html", error="Failed to fetch document.")
 
 
 @app.route("/search", methods=["GET"])
@@ -94,10 +97,9 @@ def search():
     query = request.args.get("query")
 
     if not query:
-        return jsonify({"status": "failure", "message": "No query provided."}), 400
+        return render_template("index.html", error="No query provided.")
 
-        results = search_pipeline.run(query=query, top_k_retriever=5)
-        
+    results = search_pipeline.run(query=query, top_k_retriever=5)
     matched_documents = [
         {
             "p_number": result["document"]["meta"]["p_number"],
@@ -107,7 +109,7 @@ def search():
         for result in results
     ]
 
-    return jsonify({"status": "success", "results": matched_documents}), 200
+    return render_template("index.html", results=matched_documents)
 
 
 if __name__ == "__main__":
